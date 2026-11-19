@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_openacademy" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.openacademy</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='function']" position="after">
+                <field name="is_instructor"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Sessions" name="openacademy_sessions">
+                    <field name="session_ids">
+                        <list>
+                            <field name="name"/>
+                            <field name="course_id"/>
+                            <field name="start_date"/>
+                            <field name="state"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu racine : l'entrée "Location" dans la liste des applications. -->
+    <!-- groups : seuls les vendeurs (et donc les gérants) voient l'application. -->
+    <menuitem id="menu_bike_rental_root" name="Location" sequence="50"
+              groups="bike_rental.group_bike_rental_user"/>
+
+    <!-- Sous-menu qui ouvre la liste des contrats. -->
+    <menuitem id="menu_bike_rental" name="Contrats" parent="menu_bike_rental_root"
+              action="bike_rental_action" sequence="10"/>
+
+    <!-- Sous-menu qui ouvre la flotte de location. -->
+    <menuitem id="menu_bike_rental_fleet" name="Vélos de location" parent="menu_bike_rental_root"
+              action="stock_lot_action_bike_rental" sequence="20"/>
+</odoo>

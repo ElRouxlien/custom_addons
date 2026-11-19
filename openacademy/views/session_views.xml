@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="session_view_list" model="ir.ui.view">
+        <field name="name">openacademy.session.list</field>
+        <field name="model">openacademy.session</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="course_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="duration"/>
+                <field name="teacher_id" string="Instructor"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="session_view_form" model="ir.ui.view">
+        <field name="name">openacademy.session.form</field>
+        <field name="model">openacademy.session</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object" string="Confirmer"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_done" type="object" string="Terminer"
+                            class="btn-primary" invisible="state != 'confirm'"/>
+                    <button name="action_cancel" type="object" string="Annuler"
+                            invisible="state in ('done', 'cancel')"/>
+                    <button name="action_set_draft" type="object" string="Remettre en brouillon"
+                            invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Session"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="course_id"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                        <group>
+                            <field name="duration"/>
+                            <field name="teacher_id" string="Instructor"/>
+                            <field name="contact_ids" string="Attendees" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Commandes" name="sale_orders">
+                            <field name="sale_order_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="amount_total"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="session_view_search" model="ir.ui.view">
+        <field name="name">openacademy.session.search</field>
+        <field name="model">openacademy.session</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="course_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="session_view_calendar" model="ir.ui.view">
+        <field name="name">openacademy.session.calendar</field>
+        <field name="model">openacademy.session</field>
+        <field name="arch" type="xml">
+            <calendar string="Sessions" date_start="start_date" date_stop="end_date" color="course_id" mode="month">
+                <field name="name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="session_view_graph" model="ir.ui.view">
+        <field name="name">openacademy.session.graph</field>
+        <field name="model">openacademy.session</field>
+        <field name="arch" type="xml">
+            <graph string="Sessions" type="bar">
+                <field name="course_id"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="session_action" model="ir.actions.act_window">
+        <field name="name">Sessions</field>
+        <field name="res_model">openacademy.session</field>
+        <field name="view_mode">list,form,calendar,graph</field>
+    </record>
+</odoo>

@@ -15,15 +15,20 @@ Long description of module's purpose
     # for the full list
     'category': 'Uncategorized',
     'version': '0.1',
+    
+    'license': 'LGPL-3',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'contacts','mail','sale'],
 
     # always loaded
-    'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+        'data': [
+        'security/ir.model.access.csv',
+        'views/course_views.xml',
+        'views/session_views.xml',
+        'views/res_partner_views.xml',
+        'views/sale_order_views.xml',
+        'views/menus.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
