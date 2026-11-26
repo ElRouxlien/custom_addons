@@ -1,6 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_bike_rental_user,access.bike.rental.user,model_bike_rental,bike_rental.group_bike_rental_user,1,1,1,0
-access_bike_rental_manager,access.bike.rental.manager,model_bike_rental,bike_rental.group_bike_rental_manager,1,1,1,1
-access_bike_rental_checkup_user,access.bike.rental.checkup.user,model_bike_rental_checkup,bike_rental.group_bike_rental_user,1,1,1,0
-access_bike_rental_checkup_manager,access.bike.rental.checkup.manager,model_bike_rental_checkup,bike_rental.group_bike_rental_manager,1,1,1,1
-access_bike_rental_return_user,access.bike.rental.return.user,model_bike_rental_return,bike_rental.group_bike_rental_user,1,1,1,1

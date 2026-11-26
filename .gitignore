@@ -179,3 +179,5 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+# Dépôt d'équipe du projet ERP, cloné ici mais suivi dans son propre dépôt
+erp-velos-odoo/
