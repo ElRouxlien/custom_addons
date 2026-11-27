@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_biblio_purchase_request_librarian,biblio.purchase.request.librarian,model_biblio_purchase_request,group_biblio_librarian,1,1,1,0
+access_biblio_purchase_request_manager,biblio.purchase.request.manager,model_biblio_purchase_request,group_biblio_manager,1,1,1,1

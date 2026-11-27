@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="request_1" model="biblio.purchase.request">
+        <field name="name">Le Pays des autres — Leïla Slimani</field>
+        <field name="reason">Demandé par plusieurs lecteurs</field>
+        <field name="price">22</field>
+        <field name="librarian_id" ref="base.user_admin"/>
+    </record>
+    <record id="request_2" model="biblio.purchase.request">
+        <field name="name">Astérix — le dernier album</field>
+        <field name="reason">Série très empruntée</field>
+        <field name="price">11</field>
+        <field name="librarian_id" ref="base.user_admin"/>
+        <field name="state">submitted</field>
+    </record>
+</odoo>

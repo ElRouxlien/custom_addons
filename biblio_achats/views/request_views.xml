@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="biblio_purchase_request_view_list" model="ir.ui.view">
+        <field name="name">biblio.purchase.request.list</field>
+        <field name="model">biblio.purchase.request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="date"/>
+                <field name="name"/>
+                <field name="price"/>
+                <field name="librarian_id"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="biblio_purchase_request_view_form" model="ir.ui.view">
+        <field name="name">biblio.purchase.request.form</field>
+        <field name="model">biblio.purchase.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" string="Envoyer" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <!-- Commander : pour tous, la demande part en validation -->
+                    <button name="action_order" string="Commander" type="object" class="oe_highlight" invisible="state != 'submitted'"/>
+                    <!-- Valider : groups= = confort (le bouton n'est pas envoyé aux non-responsables).
+                         La vraie protection est dans action_done (AccessError). -->
+                    <button name="action_done" string="Valider" type="object" class="oe_highlight"
+                            invisible="state != 'to_approve'"
+                            groups="biblio_achats.group_biblio_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,to_approve,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Titre du livre"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="reason"/>
+                            <field name="price"/>
+                        </group>
+                        <group>
+                            <field name="librarian_id"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <field name="notes"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="biblio_purchase_request_action" model="ir.actions.act_window">
+        <field name="name">Demandes d'achat</field>
+        <field name="res_model">biblio.purchase.request</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu visible seulement pour les bibliothécaires (et donc les responsables, via implied_ids) -->
+    <menuitem id="biblio_purchase_menu_root" name="Achats de livres"
+              groups="biblio_achats.group_biblio_librarian"/>
+    <menuitem id="biblio_purchase_request_menu" name="Demandes d'achat" parent="biblio_purchase_menu_root" action="biblio_purchase_request_action"/>
+</odoo>

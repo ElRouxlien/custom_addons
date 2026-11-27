@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Catégorie et privilège (Odoo 19) : code donné par l'énoncé, repris tel quel.
+         Les groupes d'un même privilège apparaissent comme un choix unique
+         « Achats de livres » dans la fiche d'un utilisateur. -->
+    <record id="module_category_purchase_request" model="ir.module.category">
+        <field name="name">Médiathèque</field>
+    </record>
+    <record id="privilege_purchase_request" model="res.groups.privilege">
+        <field name="name">Achats de livres</field>
+        <field name="category_id" ref="module_category_purchase_request"/>
+    </record>
+
+    <!-- Groupe Bibliothécaire : crée et suit ses demandes d'achat. -->
+    <record id="group_biblio_librarian" model="res.groups">
+        <field name="name">Bibliothécaire</field>
+        <field name="privilege_id" ref="privilege_purchase_request"/>
+        <!-- un bibliothécaire est aussi un utilisateur interne -->
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Groupe Responsable : tous les droits du bibliothécaire (implied_ids),
+         plus la suppression et la validation. -->
+    <record id="group_biblio_manager" model="res.groups">
+        <field name="name">Responsable</field>
+        <field name="privilege_id" ref="privilege_purchase_request"/>
+        <field name="implied_ids" eval="[(4, ref('group_biblio_librarian'))]"/>
+        <!-- l'administrateur est responsable -->
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+
+    <!-- Règle d'enregistrement : un bibliothécaire ne voit que SES demandes.
+         librarian_id pointe vers res.users, donc on compare à user.id. -->
+    <record id="rule_request_librarian_own" model="ir.rule">
+        <field name="name">Demandes d'achat : uniquement les miennes</field>
+        <field name="model_id" ref="model_biblio_purchase_request"/>
+        <field name="groups" eval="[(4, ref('group_biblio_librarian'))]"/>
+        <field name="domain_force">[('librarian_id', '=', user.id)]</field>
+    </record>
+
+    <!-- Le responsable hérite du groupe bibliothécaire, donc de la règle ci-dessus.
+         Les règles de GROUPE s'unissent (OU) : cette règle « toujours vraie »
+         lui rend l'accès à toutes les demandes. -->
+    <record id="rule_request_manager_all" model="ir.rule">
+        <field name="name">Demandes d'achat : le responsable voit tout</field>
+        <field name="model_id" ref="model_biblio_purchase_request"/>
+        <field name="groups" eval="[(4, ref('group_biblio_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+</odoo>
